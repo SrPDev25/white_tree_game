@@ -1,0 +1,97 @@
+[
+	{
+		"_id": 0,
+		"token": "TokenAleatorio0001",
+		"party": "PartyId1"
+	},
+	{
+		"_id": 1,
+		"token": "TokenAleatorio0002",
+		"party": "PartyId1"
+	},
+	{
+		"_id": 2,
+		"token": "TokenAleatorio0003",
+		"party": "PartyId1"
+	},
+	{
+		"_id": 3,
+		"token": "TokenAleatorio0004",
+		"party": "PartyId1"
+	},
+	{
+		"_id": 4,
+		"token": "TokenAleatorio0005",
+		"party": "PartyId1"
+	},
+	{
+		"_id": 5,
+		"token": "TokenAleatorio0006",
+		"party": "PartyId1"
+	},
+	{
+		"_id": 6,
+		"token": "TokenAleatorio0007",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 7,
+		"token": "TokenAleatorio0008",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 8,
+		"token": "TokenAleatorio0009",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 9,
+		"token": "TokenAleatorio0010",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 10,
+		"token": "TokenAleatorio0011",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 11,
+		"token": "TokenAleatorio0012",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 12,
+		"token": "TokenAleatorio0013",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 13,
+		"token": "TokenAleatorio0014",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 14,
+		"token": "TokenAleatorio0015",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 15,
+		"token": "TokenAleatorio0016",
+		"party": "PartyId2"
+	},
+	{
+		"_id": 16,
+		"token": "TokenAleatorio0017",
+		"party": "PartyId3"
+	},
+	{
+		"_id": 17,
+		"token": "TokenAleatorio0018",
+		"party": "PartyId3"
+	},
+	{
+		"_id": 18,
+		"token": "TokenAleatorio0019",
+		"party": "PartyId3"
+	}
+]
