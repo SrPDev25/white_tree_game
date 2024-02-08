@@ -1,4 +1,4 @@
-import { IParty } from "../../../../dtb/tables/parties/types";
+import { IParty, IPlayer } from "../../../../dtb/tables/parties/types";
 
 
 /**
@@ -6,7 +6,7 @@ import { IParty } from "../../../../dtb/tables/parties/types";
  * @param {IParty} party party object to change
  * @param {number} playerId this player's _id
  */
-export const filterOtherPlayersInfo = (party: IParty, playerId: number): void => {
+export const filterOtherPlayersInfo = (party: IParty, playerId: IPlayer['_id']): void => {
 	party.players = party.players.map(player => {
 		//This player can see his information
 		if (player._id === playerId) {

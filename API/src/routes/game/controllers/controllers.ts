@@ -3,6 +3,7 @@ import ErrorStatus from "../../../common/Error/ErrorStatus";
 import { isPartyId } from "../../../dtb/tables/parties/utils/party";
 import { isString } from "../../../utils/primitive/string";
 import { joinPlayerToParty } from "../app/services";
+import { ObjectId } from "mongodb";
 
 
 /**
@@ -23,7 +24,7 @@ export const goingPlayerToParty = async (req: Request, res: Response) => {
 		if (isString(userName))
 			throw new ErrorStatus(400, 'Incorrect user name at body');
 
-		const userAuthorization = await joinPlayerToParty(partyId, userName);
+		const userAuthorization = await joinPlayerToParty(new ObjectId(req.params.partyId), userName);
 
 		return res.status(200).send(userAuthorization);
 	} catch (error) {

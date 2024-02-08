@@ -1,4 +1,4 @@
-import { isTokenValid } from "../../../dtb/tables/users/utils/token";
+import { isTokenValid } from "../../../utils/appFormats/verification/token";
 import { AuthorizationServices } from "../core/provider";
 import { IUserAuthorization } from "./response.type";
 import ErrorStatus from "../../../common/Error/ErrorStatus";

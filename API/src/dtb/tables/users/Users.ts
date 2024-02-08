@@ -1,7 +1,9 @@
 
+
+import { DeleteResult, InsertOneResult, ObjectId } from "mongodb";
 import ErrorStatus from "../../../common/Error/ErrorStatus";
-import { generateRandomString } from "../../../utils/primitive/string";
-import { fakeUserDataBase } from "../../fakeDatabase";
+import { generateToken } from "../../../utils/appFormats/verification/token";
+import { getDb } from "../../db";
 import { IUser } from "./user.type";
 
 
@@ -11,50 +13,66 @@ export class Users {
 	/**
 	 * Add a new user to database
 	 * @param {Pick<IUser, 'party'>} newUser necessary data to create a new user
-	 * @returns {Promise<IUser | undefined>}
+	 * @returns {Promise<InsertOneResult>} InsertOneResult from mongodb
 	 */
-	static async addUser(newUser: Pick<IUser, 'party'>): Promise<IUser | undefined> {
-		//Last user _id used
-		const lastId = fakeUserDataBase[fakeUserDataBase.length - 1]._id;
-
-		let token = generateRandomString(18);
-
-		while(fakeUserDataBase.find(user => user.token === token))
-			token = generateRandomString(18);
+	static async addUser(newUser: Pick<IUser, 'party'>): Promise<InsertOneResult> {
+		let token = generateToken();
+		//Check if token is unique
+		while ( await this.getUserByToken(token)){
+			token = generateToken();
+		}
 
 		//Create new user
-		const user: IUser = {
-			_id: lastId + 1,
+		const user: Omit<IUser, '_id'> = {
 			token,
 			party: newUser.party
 		};
+		//Insert user to database
+		const insertInfo = await getDb().collection('users').insertOne(user)
+			.then((result: InsertOneResult) => result)
+			.catch((error) => {
+				console.error(error);
+				throw new ErrorStatus(500, 'Error at get user by token');
+			});
 
-		//Add user to database
-		fakeUserDataBase.push(user);
-		return user;
+		return insertInfo;
 	}
 
 	/**
 	 * Find at database a user by their token
-	 * @param {string} token 18 characters token
-	 * @returns {Promise<IUser | undefined>} User founded or undefined
+	 * @param {string} token v4 token
+	 * @returns {Promise<IUser | null>} User founded or null
 	 */
-	static async getUserByToken(token: string): Promise<IUser | undefined> {
-		const user = fakeUserDataBase.find((user: IUser) => user.token === token);
-		return user;
+	static async getUserByToken(token: string): Promise<IUser | null> {
+		return getDb()?.collection('users').findOne({ token: token })
+			.then((user) => user as IUser | null)
+			.catch((error) => {
+				console.error(error);
+				throw new ErrorStatus(500, 'Error at get user by token');
+			});
+	}
+
+	/**
+	 * Find at database using their _id
+	 * @param {ObjectId} id Valid mongoDB _id
+	 * @returns {Promise<IUser | null>} User founded or null
+	 */
+	static async getUserById(id: ObjectId): Promise<IUser | null> {
+		return getDb()?.collection('users').findOne({ _id: id })
+			.then((user) => user as IUser | null)
+			.catch((error) => {
+				console.error(error);
+				throw new ErrorStatus(500, 'Error at get user by token');
+			});
 	}
 
 
 	/**
 	 * Delete a user founded by their _id
-	 * @param {number} _id user's _id
+	 * @param {ObjectId} _id user's _id
+	 * @returns {Promise<DeleteResult>} DeleteResult from mongodb
 	 */
-	static async deleteUserById(_id: number): Promise<void> {
-		const index = fakeUserDataBase.findIndex((user: IUser) => user._id === _id);
-		//Filter found user error
-		if (index !== -1)
-			throw new ErrorStatus(500, 'Error at delete user');
-		fakeUserDataBase.splice(index, 1);
-		console.log(fakeUserDataBase);
+	static async deleteUserById(_id: ObjectId): Promise<DeleteResult> {
+		return  await getDb().collection('users').deleteOne({ _id: _id });
 	}
 }

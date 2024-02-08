@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb"
+import { IUser } from "../users/user.type"
 import { GamePhaseEnum, PlayerRolEnum, PlayerStateEnum } from "./enums"
 
 /**
@@ -5,7 +7,7 @@ import { GamePhaseEnum, PlayerRolEnum, PlayerStateEnum } from "./enums"
  */
 export type IParty = {
     /**Database id of the party */
-    _id: string,
+    _id: ObjectId,
     /**Simple unique id with 6 characters to easily find the party */
     simpleId: string,
     /** Setted party config */
@@ -41,7 +43,7 @@ export type IPlayer = {
     /**
      * User's data base id
      */
-    _id: number,
+    _id: IUser['_id'],
     /** Player name */
     name: string,
     /**

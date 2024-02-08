@@ -12,7 +12,14 @@ import { IUser } from "../../../dtb/tables/users/user.type";
  */
 export const createPlayer = async (partyId: IParty['_id'], playerName: IPlayer['name']): Promise<{ user: IUser; player: IPlayer; }> => {
 	//Create user
-	const user = await Users.addUser({ party: partyId });
+	const user = await Users.addUser({ party: partyId })
+		.then((result)=> {
+			if (result.insertedId)
+				return Users.getUserById(result.insertedId);
+			else
+				throw new ErrorStatus(500, 'Internal server error, user not created');
+		});
+	
 	if (!user)
 		throw new ErrorStatus(500, 'Internal server error, user not created');
 	//Create player

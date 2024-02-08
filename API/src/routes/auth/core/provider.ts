@@ -16,7 +16,7 @@ export class AuthorizationServices {
 	 */
 	static checkUserToken(token: string): Promise<IUserInfo> {
 		return Users.getUserByToken(token)
-			.then((user: IUser | undefined) => {
+			.then((user: IUser | null) => {
 				if (user)
 					return parseUserToUserAuthorization(user);
 				else

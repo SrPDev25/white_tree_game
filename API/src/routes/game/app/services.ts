@@ -1,6 +1,7 @@
 import ErrorStatus from "../../../common/Error/ErrorStatus";
 import { Parties } from "../../../dtb/tables/parties/Parties";
 import { GamePhaseEnum } from "../../../dtb/tables/parties/enums";
+import { IParty } from "../../../dtb/tables/parties/types";
 import { IUserAuthorization } from "../../auth/app/response.type";
 import { createPlayer } from "../core/provider";
 
@@ -11,7 +12,7 @@ import { createPlayer } from "../core/provider";
  * @param {string} playerName 
  * @returns {Promise<IUserAuthorization>} user's general and player information
  */
-export const joinPlayerToParty = async (partyId: string, playerName: string): Promise<IUserAuthorization> => {
+export const joinPlayerToParty = async (partyId: IParty['_id'], playerName: string): Promise<IUserAuthorization> => {
 
 	const partyInfo = await Parties.getPartyById(partyId);
 	//Party comprobations
