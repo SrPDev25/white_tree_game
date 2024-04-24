@@ -1,11 +1,11 @@
 import { PlayerRolEnum, PlayerStateEnum } from "../enums";
 import { IParty, IPlayer } from "../types";
-
 /**
  * party.players table's request
  */
 export class Players {
-	//TODO
+	
+
 	/**
 	 * Add a new player to a party
 	 * @param {IParty['_id']} partyId party to add player

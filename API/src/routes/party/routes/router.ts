@@ -4,12 +4,9 @@ import { partyRouterAuthorization, playerPartyInfo } from '../controllers/contro
 //Instacia dentro de express para indicar una ruta
 const router = express.Router();
 
-router.use('/', async (_req, _res, next) => next());
-
-
 
 // Party authorization filter
-router.use('/:partyId', partyRouterAuthorization);
+router.use('/', partyRouterAuthorization);
 
 /**
  * @description Get party information, filtered by player authorization
@@ -21,7 +18,7 @@ router.use('/:partyId', partyRouterAuthorization);
  * @returns {Party | IDefaultPhaseFilter | IWordsPhaseFilter | IVotingPhaseFilter | IVotingResultsPhaseFilter}
  * 		party information filtered by player authorization
  */
-router.get('/:partyId', playerPartyInfo);
+router.get('/', playerPartyInfo);
 
 router.get('/:partyId/ej', async (_req, res) => {
 	return res.status(200).send('Party not found');

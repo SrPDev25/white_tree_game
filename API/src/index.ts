@@ -5,8 +5,8 @@ import authRouter from './routes/auth/routes/auth.router'
 import partyRouter from './routes/party/routes/router'
 import gameRouter from './routes/game/routes/router'
 import { connectToDb } from './dtb/db'
-import { Users } from './dtb/tables/users/Users'
 import { ObjectId } from 'mongodb'
+import { Parties } from './dtb/tables/parties/Parties'
 
 //Se crea instacia de experss
 const app = express()
@@ -37,12 +37,10 @@ app.use('/party', partyRouter);
 app.use('/game', gameRouter);
 
 // Test route
-app.get('/test/:userId', (req, res) => {
+app.get('/test/:partyId', (req, res) => {
 	try {
-		return Users.deleteUserById(new ObjectId(req.params.userId))
-			.then((result) => {
-				return res.status(500).send(String(result.deletedCount))
-			})
+		return Parties.deletePartyById(new ObjectId(req.params.partyId))
+			.then((result) => res.status(200).send(result))
 			.catch((error) => res.status(500).send(error));
 	} catch (error) {
 		return res.status(500).send(error)

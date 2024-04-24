@@ -12,7 +12,7 @@ export const generateToken = (): string => uuidv4();
 /**
  * Check if the token is valid value
  * @param {unknown} token 
- * @returns 
+ * @returns {string | undefined} error message or undefined
  */
 export const isTokenValid = (token: unknown): string | undefined => {
 	let error = undefined;
@@ -41,7 +41,7 @@ export const isTokenValid = (token: unknown): string | undefined => {
  * @returns {string | undefined} error message or undefined
  */
 export const isToken = (token: string): string | undefined => {
-	if(validateToken(token)){
+	if(!validateToken(token)){
 		return 'is not a valid token';
 	} else
 		return undefined;

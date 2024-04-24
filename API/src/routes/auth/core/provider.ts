@@ -33,8 +33,9 @@ export class AuthorizationServices {
 	 */
 	static async getPartyPlayerInfo(userId: IPlayer['_id'], partyId: IParty['_id']): Promise<IPlayer> {
 		const party = await Parties.getPartyById(partyId);
+
 		if (party){
-			const player = party.players.find(player => player._id === userId);
+			const player = party.players.find(player => player._id.equals(userId));
 			if (player)
 				return player;
 			else{
