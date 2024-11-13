@@ -9,9 +9,9 @@ let dbConnection: Db;
  * @param {CallableFunction} cb 
  */
 export const connectToDb = (cb: CallableFunction) => {
-	MongoClient.connect('mongodb://localhost:27017/TFG')
+	MongoClient.connect('mongodb://admin:admin@localhost:27017',)
 		.then((client) => {
-			dbConnection = client.db(); 
+			dbConnection = client.db('arbol_blanco'); 
 			return cb();
 		})
 		.catch((err) => {

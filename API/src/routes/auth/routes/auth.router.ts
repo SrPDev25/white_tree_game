@@ -1,5 +1,5 @@
 import express from 'express'
-import { playerAutenticacion } from '../controllers/controllers';
+import { playerAuthentication} from '../controllers/controllers';
 
 
 //Instacia dentro de express para indicar una ruta
@@ -12,7 +12,7 @@ const router = express.Router();
  * @headers {string} token
  * @returns {IUserInfos}
  */
-router.get('/', playerAutenticacion);
+router.get('/', playerAuthentication);
 
 
 //Devuelve la ruta despues de configurada

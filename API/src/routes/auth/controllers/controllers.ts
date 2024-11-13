@@ -6,18 +6,18 @@ import { getUserAuthorization } from "../app/services";
 
 
 /**
- * Give autentication information of token's user
+ * Give authentication information of token's user
  * @get
  * @header {User['token']} token user's token
  * @returns {IUserAuthorization} user's general and player information
  */
-export const playerAutenticacion = async (req: Request, res: Response) => {
+export const playerAuthentication = async (req: Request, res: Response) => {
 	try {
 		//Information filter
-		const autentificationInfo: IUserAuthorization = await getUserAuthorization(req.headers.token);
+		const authenticationInfo: IUserAuthorization = await getUserAuthorization(req.headers.token);
 
 		//Response
-		return res.status(200).send(autentificationInfo);
+		return res.status(200).send(authenticationInfo);
 	} catch (error) {
 		if (error instanceof ErrorStatus) {
 			return res.status(error.status).send(error.message);

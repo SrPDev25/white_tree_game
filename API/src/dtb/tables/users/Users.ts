@@ -15,7 +15,7 @@ export class Users {
 	 * @param {Pick<IUser, 'party'>} newUser necessary data to create a new user
 	 * @returns {Promise<InsertOneResult>} InsertOneResult from mongodb
 	 */
-	static async addUser(newUser: Pick<IUser, 'party'>): Promise<InsertOneResult> {
+	static async createUser(newUser: Pick<IUser, 'party'>): Promise<IUser> {
 		let token = generateToken();
 		//Check if token is unique
 		while ( await this.getUserByToken(token)){
@@ -35,7 +35,12 @@ export class Users {
 				throw new ErrorStatus(500, 'Error at get user by token');
 			});
 
-		return insertInfo;
+		const userInfo = await this.getUserById(insertInfo.insertedId);
+
+		if(!userInfo)
+			throw new ErrorStatus(500, 'Error at get user by token');
+
+		return userInfo;
 	}
 
 	/**

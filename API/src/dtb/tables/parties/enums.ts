@@ -27,3 +27,7 @@ export enum PlayerRolEnum {
 	MASTER = 'master',
     PLAYER = 'player'
 }
+//Min players at default party, master included
+export const MIN_PLAYERS = 5;
+//Max players at default party
+export const MAX_PLAYERS = 10;

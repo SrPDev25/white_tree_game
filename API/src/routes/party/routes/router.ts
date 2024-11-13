@@ -20,6 +20,12 @@ router.use('/', partyRouterAuthorization);
  */
 router.get('/', playerPartyInfo);
 
+
+
+/**
+ * TODO: Implementar
+ * Get the iformation of the party with the same id
+ */
 router.get('/:partyId/ej', async (_req, res) => {
 	return res.status(200).send('Party not found');
 });

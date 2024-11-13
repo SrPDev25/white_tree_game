@@ -1,5 +1,10 @@
-import { PlayerRolEnum, PlayerStateEnum } from "../enums";
+import { WithId } from "mongodb";
+import { getDb } from "../../../db";
+import { CollectionsEnum } from "../../collections.enum";
+import { GamePhaseEnum, PlayerRolEnum, PlayerStateEnum } from "../enums";
+import { Parties } from "../Parties";
 import { IParty, IPlayer } from "../types";
+import ErrorStatus from "../../../../common/Error/ErrorStatus";
 /**
  * party.players table's request
  */
@@ -12,23 +17,44 @@ export class Players {
 	 * @param {IPlayer} player  player to add
 	 * @returns {IPlayer | undefined} party with new player or undefined if party not found
 	 */
-	static async addPlayer(_partyId: IParty['_id'], player: Pick<IPlayer, '_id' | 'name' | 'rol'>): Promise<IPlayer | undefined> {
+	static async addPlayer(partyId: IParty['_id'], player: Pick<IPlayer, '_id' | 'name' | 'rol'>): Promise<WithId<IParty> | null> {
+		let playerRol = PlayerRolEnum.PLAYER;
+		
 		//Find party
-		const party = undefined;
+		const party = await Parties.getPartyById(partyId);
+
+		if (!party)
+			throw new Error('Player party not found');
+
+		//Check if party is in recruitment phase
+		if (party.gamePhase !== GamePhaseEnum.RECRUITMENT)
+			throw new Error('Party is not in recruitment');
+
+		//Check if party is full
+		if (party.players.length >= party.gameConfig.maxPlayers)
+			throw new Error('Party is full');
+
+		//If this party have no master, set this player as master
+		if(!party.players.find(value => value.rol === PlayerRolEnum.MASTER))
+			playerRol = PlayerRolEnum.MASTER;
 
 		//New Player info
 		const newPlayer: IPlayer = {
 			_id: player._id,
 			name: player.name,
-			rol: player.rol ?? PlayerRolEnum.PLAYER,
+			rol: playerRol,
 			state: PlayerStateEnum.ALIVE
 		};
-	
-		if (party) {
-			//party.players.push(newPlayer);
-			return { ...newPlayer };
-		} else
-			return undefined;
+
+		return await getDb().collection<IParty>(CollectionsEnum.PARTIES)
+			.findOneAndUpdate({ _id: partyId }, { $push: { 'players': newPlayer } }, { returnDocument: 'after' })
+			.then(result => {
+				return result;
+			})
+			.catch(err => {
+				console.error(err);
+				throw new ErrorStatus(500, 'Error at adding user at party')
+			});
 	}
 
 	/**

@@ -1,0 +1,9 @@
+/mongo_data
+/node_modules
+.eslintrc.js
+.git
+.gitignore
+.gitlab-ci.yml
+.prettierrc
+Dockerfile*
+README.md

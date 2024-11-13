@@ -2,7 +2,7 @@ import { DeleteResult, InsertOneResult } from "mongodb";
 import { IParty } from "./types";
 import { Players } from "./values/Player";
 import { getDb } from "../../db";
-import { GamePhaseEnum, PlayerRolEnum, PlayerStateEnum } from "./enums";
+import { GamePhaseEnum } from "./enums";
 import ErrorStatus from "../../../common/Error/ErrorStatus";
 import { ICreateParty } from "./parties.interfaces";
 
@@ -22,17 +22,12 @@ export class Parties extends Players {
 	 * @returns {Promise<InsertOneResult>} 
 	 */
 	static async createParty({
-		gameConfig,
-		master
+		gameConfig
 	}: ICreateParty): Promise<InsertOneResult> {
 		//New party values
 		const newParty: Omit<IParty, '_id'> = {
 			gameConfig,
-			players: [{
-				state: PlayerStateEnum.MASTER,
-				...master,
-				rol: PlayerRolEnum.MASTER,
-			}],
+			players: [],
 			gamePhase: GamePhaseEnum.RECRUITMENT
 		}
 

@@ -18,17 +18,19 @@ export const getUserAuthorization = async (userToken: unknown): Promise<IUserAut
 	//Database request
 	const user = await AuthorizationServices.checkUserToken(userToken as string);
 	const player = await AuthorizationServices.getPartyPlayerInfo(user._id, user.party)
+		.then((player) => player)
 		.catch((error: ErrorStatus) => {
 			console.error({
 				...error,
 				warning: 'Corrupted user'
 			});
-			throw new ErrorStatus(500, 'Internal server error, player party not found')
 		});
+	if(!player)
+		throw new ErrorStatus(500, 'Internal server error, player party not found')
 
 	//Information filter
-	const autentificationInfo: IUserAuthorization = { ...user, playerInfo: player};
+	const authenticationInfo: IUserAuthorization = { ...user, playerInfo: player};
 
 	//Response
-	return autentificationInfo;
+	return authenticationInfo;
 };

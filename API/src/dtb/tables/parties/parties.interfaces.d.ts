@@ -1,8 +1,7 @@
 import { IParty, IPlayer } from './types';
 
 export interface ICreateParty {
-    gameConfig: IParty['gameConfig'],
-    master: ICreatePlayer
+    gameConfig: IParty['gameConfig']
 }
 
 export interface ICreatePlayer {

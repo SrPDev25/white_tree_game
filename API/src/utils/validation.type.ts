@@ -1,2 +1,2 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ValidationType = (value: any) => string | undefined;
+export type ValidationType = (value: any, extra?: any) => string | undefined;
