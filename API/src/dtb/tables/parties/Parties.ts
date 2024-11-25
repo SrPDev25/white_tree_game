@@ -7,13 +7,14 @@ import ErrorStatus from "../../../common/Error/ErrorStatus";
 import { ICreateParty } from "./parties.interfaces";
 
 
+//En la zona de dtb se encontrará la lógica más interna como las normas sobre las tablas
+//Una party siempre se crea con gamePhase: GamePhaseEnum.RECRUITMENT por ejemplo, crear una sin esto daría a errores
 
 /**
  * Parties table's request
+ * Como herencia no me gusta nada esto, para ordenar esta bien, pero party no hereda de player. A ver que tal progresa
  */
 export class Parties extends Players {
-	//TODO
-
 
 	/**
 	 * Create a party
@@ -24,9 +25,16 @@ export class Parties extends Players {
 	static async createParty({
 		gameConfig
 	}: ICreateParty): Promise<InsertOneResult> {
+
+		//Crear un código simple para la party que no se repita
+		//Comprobar que no se repite
+		const simpleId = Math.random().toString(8).substring(2,9)
+	
+
 		//New party values
 		const newParty: Omit<IParty, '_id'> = {
 			gameConfig,
+			simpleId,
 			players: [],
 			gamePhase: GamePhaseEnum.RECRUITMENT
 		}
@@ -46,6 +54,20 @@ export class Parties extends Players {
 	 */
 	static async getPartyById(_id: IParty['_id']): Promise<IParty | null> {
 		return await getDb().collection('parties').findOne({ _id })
+			.then(result => result as IParty | null)
+			.catch(err => {
+				console.error(err);
+				throw new ErrorStatus(500, 'Error at getting party')
+			});
+	}
+
+	/**
+	 * Find party by their _id
+	 * @param {ObjectId} _id party's id
+	 * @returns 
+	 */
+	static async getPartyBySimpleId(simpleId: IParty['simpleId']): Promise<IParty | null> {
+		return await getDb().collection('parties').findOne({ simpleId })
 			.then(result => result as IParty | null)
 			.catch(err => {
 				console.error(err);

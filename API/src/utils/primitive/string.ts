@@ -1,5 +1,6 @@
 /**
  * Check if is a primitive string
+ * @nota es anti intuitivo que ante un isAlgo el si sea el no
  * @param {unknown} value 
  * @returns {boolean}
  */

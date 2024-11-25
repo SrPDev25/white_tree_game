@@ -1,9 +1,9 @@
 import ErrorStatus from "../../../common/Error/ErrorStatus";
 import { Parties } from "../../../dtb/tables/parties/Parties";
 import { GamePhaseEnum } from "../../../dtb/tables/parties/enums";
-import { IParty } from "../../../dtb/tables/parties/types";
+import { IGameConfig, IParty } from "../../../dtb/tables/parties/types";
 import { IUserAuthorization } from "../../auth/app/response.type";
-import { createPlayer } from "../core/provider";
+import { providerCreatePlayer, providerCreateParty } from "../core/provider";
 
 
 /**
@@ -12,7 +12,7 @@ import { createPlayer } from "../core/provider";
  * @param {string} playerName 
  * @returns {Promise<IUserAuthorization>} user's general and player information
  */
-export const joinPlayerToParty = async (partyId: IParty['_id'], playerName: string): Promise<IUserAuthorization> => {
+export const serviceJoinPlayerToParty = async (partyId: IParty['_id'], playerName: string): Promise<IUserAuthorization> => {
 
 	const partyInfo = await Parties.getPartyById(partyId);
 	//Party comprobations
@@ -30,7 +30,7 @@ export const joinPlayerToParty = async (partyId: IParty['_id'], playerName: stri
 		throw new ErrorStatus(400, 'Name already used');
 
 	//Player creation
-	const playerCreationInfo = await createPlayer(partyId, playerName);
+	const playerCreationInfo = await providerCreatePlayer(partyId, playerName);
 
 	//Response
 	const authorization: IUserAuthorization = {
@@ -39,4 +39,16 @@ export const joinPlayerToParty = async (partyId: IParty['_id'], playerName: stri
 	}
 
 	return authorization;
+}
+
+/**
+ * Crate a new empty party
+ * @param {IGameConfig} gameConfig party configuration
+ * @returns {Promise<IParty['_id']>} new party _id
+ */
+export const serviceCreateParty = async (gameConfig: IGameConfig): Promise<IParty['_id']> => {
+	//Create a party
+	const newPartyId = await providerCreateParty(gameConfig);
+
+	return newPartyId;
 }

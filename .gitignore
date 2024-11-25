@@ -8,6 +8,8 @@ package-lock.json
 .nyc_output
 coverage
 
+mongo_data
+
 # Benchmarking
 benchmarks/graphs
 

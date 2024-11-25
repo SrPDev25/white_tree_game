@@ -26,6 +26,7 @@ export class AuthorizationServices {
 
 	/**
 	 * Search the user at party database and return it
+	 * //TODO filtrar información por nivel de rol y fase de partida
 	 * @param {string} userId player's _id
 	 * @param {string} partyId party's _id
 	 * @throws {ErrorStatus} 404 if party or player not found
