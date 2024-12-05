@@ -9,8 +9,8 @@ export type IParty = {
     /**Database id of the party */
     _id: ObjectId,
     /**Simple unique id with 6 characters to easily find the party */
-    simpleId: string,
-    /** Setted party config */
+    simpleId: string | null,
+    /** Set party config */
     gameConfig: IGameConfig,
     /** Phase of the game
      * @default 'recruitment'

@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import ErrorStatus from "../../../common/Error/ErrorStatus";
-import { isPartyId } from "../../../dtb/tables/parties/utils/party";
+import { isPartyId, isPartySimpleId } from "../../../dtb/tables/parties/utils/party";
 import { isString } from "../../../utils/primitive/string";
-import { serviceCreateParty, serviceJoinPlayerToParty } from "../app/services";
+import { serviceCreateParty, serviceFindPartyBySimpleId, serviceJoinPlayerToParty } from "../app/services";
 import { ObjectId } from "mongodb";
 import { isGameConfig } from '../../../dtb/tables/parties/utils/party';
+import { GamePhaseEnum } from "../../../dtb/tables/parties/enums";
+import { IFindByPartySimpleId } from "../routes/response.type";
 
 /**
  * Add a new player to a party
@@ -32,6 +34,40 @@ export const goingPlayerToParty = async (req: Request, res: Response) => {
 			return res.status(error.status).send(error.message);
 		else
 			return res.status(500).send('Internal server error');
+	}
+}
+
+/**
+ * Find a party by simpleId
+ * the party must be in recruitment phase and not full
+ * @param {string} simpleId party simpleId, 7 characters
+ * @returns {IFindByPartySimpleId} party _id
+ */
+export const controllerFindPartyBySimpleId = async ({params}: Request, res: Response) => {
+
+	try {
+		//Checks
+		const checkError = isPartySimpleId(params.simpleId);
+		if (checkError)
+			return res.status(400).send(checkError);
+		//Find
+		const party = await serviceFindPartyBySimpleId(params.simpleId);
+		//Check party status
+		if(!party)
+			return res.status(404).send('Party not found');
+		if(party.gamePhase !== GamePhaseEnum.RECRUITMENT)
+			return res.status(403).send('Party is not in recruitment phase');
+		if(party.players.length >= party.gameConfig.maxPlayers)
+			return res.status(403).send('Party is full');
+		//Response
+		const response: IFindByPartySimpleId = {
+			partyId: party._id
+		};
+
+		return res.status(200).send(response);
+
+	} catch (error) {
+		return res.status(500).send('find simple id')
 	}
 }
 

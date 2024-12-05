@@ -1,5 +1,6 @@
 import express from 'express';
-import { controllerCreateParty, goingPlayerToParty } from '../controllers/controllers';
+import { controllerCreateParty, controllerFindPartyBySimpleId, goingPlayerToParty } from '../controllers/controllers';
+
 
 const router = express.Router();
 
@@ -17,7 +18,15 @@ router.use('/', (_req, _res, next) => next());
  */
 router.post('/going/:partyId', goingPlayerToParty)
 
-
+/**
+ * Find a party by simpleId
+ * the party must be in recruitment phase and not full
+ * @get
+ * @endpoint /game/find/:simpleId
+ * @param {string} simpleId party simpleId, 7 characters
+ * @returns {IFindByPartySimpleId} party _id
+ */
+router.get('/find/:simpleId', controllerFindPartyBySimpleId);
 
 /**
  * @post

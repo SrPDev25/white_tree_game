@@ -30,6 +30,18 @@ export const providerCreatePlayer = async (partyId: IParty['_id'], playerName: I
 	return { user, player: findPlayer };
 }
 
+/**
+ * Find a party by simpleId
+ * @param {IParty['simpleId']} simpleId party simpleId
+ * @returns {Promise<IParty['_id']>} new party _id
+ */
+export const providerFindByPartySimpleId = async (simpleId: IParty['simpleId']): Promise<IParty | null> => {
+	//Create a party
+	const foundParty = await Parties.getPartyBySimpleId(simpleId);
+
+	return foundParty;
+}
+
 
 /**
  * Crate a new empty party

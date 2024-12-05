@@ -9,7 +9,7 @@ import { IGameConfig } from "../types";
 /**
  * Check partyId format
  * @param {unknown} partyId
- * @returns 
+ * @returns {string | undefined} Return the error as string or undefined if is valid
  */
 export const isPartyId = (partyId: unknown): string | undefined => {
 	let error = undefined;
@@ -27,6 +27,30 @@ export const isPartyId = (partyId: unknown): string | undefined => {
 		}
 		return true;
 	});
+
+	return error;
+};
+
+export const isPartySimpleId = (simpleId: unknown): string | undefined => {
+	let error = undefined;
+	//ValidationsOrder
+	const checks: ValidationType[] = [	
+		isNotEmpty,
+		isString,
+	];
+
+	//Check validations until one fail
+	checks.every((check: ValidationType) => {
+		const result = check(simpleId);
+		if(result){
+			error = 'partyId ' + result;
+			return false;
+		}
+		return true;
+	});
+
+	if(String(simpleId).length !== 7)
+		error= 'partyId must be 7 characters long';
 
 	return error;
 };

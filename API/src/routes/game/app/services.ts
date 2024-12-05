@@ -3,7 +3,7 @@ import { Parties } from "../../../dtb/tables/parties/Parties";
 import { GamePhaseEnum } from "../../../dtb/tables/parties/enums";
 import { IGameConfig, IParty } from "../../../dtb/tables/parties/types";
 import { IUserAuthorization } from "../../auth/app/response.type";
-import { providerCreatePlayer, providerCreateParty } from "../core/provider";
+import { providerCreatePlayer, providerCreateParty, providerFindByPartySimpleId } from "../core/provider";
 
 
 /**
@@ -15,7 +15,6 @@ import { providerCreatePlayer, providerCreateParty } from "../core/provider";
 export const serviceJoinPlayerToParty = async (partyId: IParty['_id'], playerName: string): Promise<IUserAuthorization> => {
 
 	const partyInfo = await Parties.getPartyById(partyId);
-	//Party comprobations
 	//Check if party exist
 	if (!partyInfo)
 		throw new ErrorStatus(404, 'Party not found');
@@ -40,6 +39,13 @@ export const serviceJoinPlayerToParty = async (partyId: IParty['_id'], playerNam
 
 	return authorization;
 }
+
+export const serviceFindPartyBySimpleId = async (simpleId: IParty['simpleId']): Promise<IParty | null> => {
+
+	//Find
+	const party = await providerFindByPartySimpleId(simpleId);
+	return party;
+};
 
 /**
  * Crate a new empty party
