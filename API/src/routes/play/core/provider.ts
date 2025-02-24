@@ -42,18 +42,6 @@ export const providerFindByPartySimpleId = async (simpleId: IParty['simpleId']):
 	return foundParty;
 }
 
-/**
- * Provider to get a party by mongo id
- * @param {IParty['_id']} id MongoId
- * @returns {Promise<IParty | null>}
- */
-export const providerGetPartyById = async (id: IParty['_id']): Promise<IParty | null> => {
-	//Create a party
-	const foundParty = await Parties.getPartyById(id);
-
-	return foundParty;
-}
-
 
 /**
  * Crate a new empty party

@@ -2,6 +2,7 @@ import { isTokenValid } from "../../../utils/appFormats/verification/token";
 import { AuthorizationServices } from "../core/provider";
 import { IUserAuthorization } from "./response.type";
 import ErrorStatus from "../../../common/Error/ErrorStatus";
+import { getPlayerPartyInfo } from "../../party/app/services";
 
 
 /**
@@ -9,7 +10,7 @@ import ErrorStatus from "../../../common/Error/ErrorStatus";
  * @header {User['token']} token user's token
  * @returns {IUserAuthorization} user's general and player information
  */
-export const getUserAuthorization = async (userToken: unknown): Promise<IUserAuthorization> => {
+export const serviceGetUserAuthorization = async (userToken: unknown): Promise<IUserAuthorization> => {
 	//Params validation
 	const badRequest = isTokenValid(userToken);
 	if (badRequest)
@@ -17,14 +18,11 @@ export const getUserAuthorization = async (userToken: unknown): Promise<IUserAut
 
 	//Database request
 	const user = await AuthorizationServices.checkUserToken(userToken as string);
-	const player = await AuthorizationServices.getPartyPlayerInfo(user._id, user.party)
-		.then((player) => player)
-		.catch((error: ErrorStatus) => {
-			console.error({
-				...error,
-				warning: 'Corrupted user'
-			});
-		});
+	if(!user)
+		throw new ErrorStatus(404, 'User not found');
+	//Get party info, then filter info //FUTURE: estaría genial en un futuro cambiarlo por un esquema de roles, pero lo lo tanto se filtra por código
+	const player = await getPlayerPartyInfo(user);
+
 	if(!player)
 		throw new ErrorStatus(500, 'Internal server error, player party not found')
 

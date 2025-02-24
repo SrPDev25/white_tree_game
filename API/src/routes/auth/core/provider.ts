@@ -24,6 +24,8 @@ export class AuthorizationServices {
 			});
 	}
 
+	
+
 	/**
 	 * Search the user at party database and return it
 	 * //TODO filtrar información por nivel de rol y fase de partida
@@ -46,7 +48,5 @@ export class AuthorizationServices {
 		} else{
 			throw new ErrorStatus(404, 'Party not found');
 		}
-			
-			
 	}
 }

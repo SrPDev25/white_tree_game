@@ -7,7 +7,7 @@ import { defaultPhaseFilter, votingPhaseFilter, votingResultsPhaseFilter, wordsP
 /**
  * Game phase's filter functions configuration
  */
-export const filterInfoConfig: Record<GamePhaseEnum, (player: IUserAuthorization, party: IParty) => unknown> = {
+export const filterInfoConfig: Record<GamePhaseEnum, (player: IUserAuthorization, party: IParty) => IParty> = {
 	[GamePhaseEnum.RECRUITMENT]: defaultPhaseFilter,
 	[GamePhaseEnum.STARTING]: defaultPhaseFilter,
 	[GamePhaseEnum.WORDS]: wordsPhaseFilter,
