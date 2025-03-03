@@ -9,6 +9,7 @@ import { connectToDb } from './dtb/db'
 import { ObjectId } from 'mongodb'
 import { Parties } from './dtb/tables/parties/Parties'
 import { config } from 'dotenv'
+import helmet from 'helmet'
 
 //ENV variables dotenv
 config();
@@ -32,6 +33,8 @@ connectToDb((err?: unknown) => {
 		})
 	}
 })
+
+app.use(helmet())
 
 // Middleware para controlar el tiempo de respuesta
 app.use((req, res, next) => {
