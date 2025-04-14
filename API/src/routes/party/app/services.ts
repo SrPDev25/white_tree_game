@@ -25,7 +25,7 @@ export const getPlayerPartyAuth = async (token: unknown): Promise<IUserAuthoriza
  * @param {IUserAuthorization} userInfo User authorization
  * @returns {Promise<unknown>} return party at different format depending on the game phase
  */
-export const getPlayerPartyInfo = async (userInfo: IUserInfo): Promise<IParty> => {
+export const serviceGetPlayerPartyInfo = async (userInfo: IUserInfo): Promise<IParty> => {
 	//Get party information
 	const partyInfo = await Parties.getPartyById(userInfo.party);
 	if (!partyInfo)
@@ -35,7 +35,6 @@ export const getPlayerPartyInfo = async (userInfo: IUserInfo): Promise<IParty> =
 	const player = partyInfo.players.find(player => player._id.equals(userInfo._id));
 	if (!player)
 		throw new ErrorStatus(404, 'Internal server error, party player not found');
-
 	//Master can see all party information
 	if (player.rol === PlayerRolEnum.MASTER)
 		return partyInfo;

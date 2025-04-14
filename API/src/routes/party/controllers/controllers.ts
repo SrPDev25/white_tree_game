@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { IPartyRouterRequest } from "../routes/router.type";
 import ErrorStatus from "../../../common/Error/ErrorStatus";
-import { getPlayerPartyInfo, getPlayerPartyAuth } from "../app/services";
+import { serviceGetPlayerPartyInfo, getPlayerPartyAuth } from "../app/services";
 
 
 /**
@@ -39,7 +39,7 @@ export const playerPartyInfo = async (req: IPartyRouterRequest, res: Response) =
 		if(!req.userAuthorization)
 			throw new ErrorStatus(500, 'User authorization not found');
 		//Get party information
-		const partyInfo = await getPlayerPartyInfo(req.userAuthorization);
+		const partyInfo = await serviceGetPlayerPartyInfo(req.userAuthorization);
 
 		if (partyInfo)
 			return res.status(200).send(partyInfo);

@@ -1,5 +1,5 @@
 import express from 'express';
-import { controllerPlayerInfo } from '../controllers/controllers';
+import { controllerEndGame, controllerPlayerInfo, controllerStartGame } from '../controllers/controllers';
 import { controllerAuthorization } from '../../auth/controllers/controllers';
 
 
@@ -10,6 +10,8 @@ router.use('/', controllerAuthorization);
 
 router.get('/', controllerPlayerInfo);
 
-router.post('/start', controllerPlayerInfo);
+router.post('/start', controllerStartGame);
+
+router.post('/end', controllerEndGame);
 
 export default router;

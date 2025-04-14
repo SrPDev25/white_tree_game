@@ -2,7 +2,7 @@ import { isTokenValid } from "../../../utils/appFormats/verification/token";
 import { AuthorizationServices } from "../core/provider";
 import { IUserAuthorization } from "./response.type";
 import ErrorStatus from "../../../common/Error/ErrorStatus";
-import { getPlayerPartyInfo } from "../../party/app/services";
+import { serviceGetPlayerPartyInfo } from "../../party/app/services";
 
 
 /**
@@ -21,7 +21,7 @@ export const serviceGetUserAuthorization = async (userToken: unknown): Promise<I
 	if(!user)
 		throw new ErrorStatus(404, 'User not found');
 	//Get party info, then filter info //FUTURE: estaría genial en un futuro cambiarlo por un esquema de roles, pero lo lo tanto se filtra por código
-	const party = await getPlayerPartyInfo(user);
+	const party = await serviceGetPlayerPartyInfo(user);
 
 	if(!party)
 		throw new ErrorStatus(500, 'Internal server error, player party not found')

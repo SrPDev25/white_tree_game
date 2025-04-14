@@ -9,7 +9,6 @@ import { serviceGetUserAuthorization } from "../app/services";
  */
 export const controllerAuthorization = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		console.log('controllerAuthorization');
 		//Check token
 		await serviceGetUserAuthorization(req.headers.token);
 

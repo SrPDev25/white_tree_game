@@ -2,7 +2,7 @@ import { DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
 import { IParty } from "./types";
 import { Players } from "./values/Player";
 import { getDb } from "../../db";
-import { GamePhaseEnum } from "./enums";
+import { GamePhaseEnum, PlayerRolEnum, PlayerStateEnum } from "./enums";
 import ErrorStatus from "../../../common/Error/ErrorStatus";
 import { ICreateParty } from "./parties.interfaces";
 
@@ -28,8 +28,8 @@ export class Parties extends Players {
 
 		//Crear un código simple para la party que no se repita
 		//Comprobar que no se repite
-		const simpleId = Math.random().toString(8).substring(2,9)
-	
+		const simpleId = Math.random().toString(8).substring(2, 9)
+
 
 		//New party values
 		const newParty: Omit<IParty, '_id'> = {
@@ -96,7 +96,7 @@ export class Parties extends Players {
 	 * @returns 
 	 */
 	static async updateWord(partyId: IParty['_id'], word: string): Promise<UpdateResult> {
-		return await getDb().collection<IParty>('parties').updateOne({ _id: partyId }, { $set: { 'word': word } })
+		return await getDb().collection<IParty>('parties').updateOne({ _id: partyId }, { $set: { 'wordInGame': word } })
 			.then(result => result)
 			.catch(err => {
 				console.error(err);
@@ -117,6 +117,30 @@ export class Parties extends Players {
 				console.error(err);
 				throw new ErrorStatus(500, 'Error at updating game phase')
 			});
+	}
+
+	static async updateResetParty(partyId: IParty['_id']): Promise<UpdateResult> {
+		return await getDb().collection<IParty>('parties')
+			.updateOne({ _id: partyId },
+				{
+					$set: {
+						wordInGame: "",
+						gamePhase: GamePhaseEnum.RECRUITMENT,
+						"players.$[player].infiltrator": false,
+						"players.$[player].state": PlayerStateEnum.ALIVE
+					}
+				},
+				{
+					arrayFilters: [
+						{ "player.rol": { $ne: PlayerRolEnum.MASTER } }
+					]
+				})
+			.then(result => result)
+			.catch(err => {
+				console.error(err);
+				throw new ErrorStatus(500, 'Error at reseting game')
+			});
+			
 	}
 
 }
