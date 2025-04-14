@@ -10,5 +10,6 @@ router.use('/', controllerAuthorization);
 
 router.get('/', controllerPlayerInfo);
 
+router.post('/start', controllerPlayerInfo);
 
 export default router;

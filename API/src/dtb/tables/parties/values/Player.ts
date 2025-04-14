@@ -1,4 +1,4 @@
-import { WithId } from "mongodb";
+import { UpdateResult, WithId } from "mongodb";
 import { getDb } from "../../../db";
 import { CollectionsEnum } from "../../collections.enum";
 import { GamePhaseEnum, PlayerRolEnum, PlayerStateEnum } from "../enums";
@@ -9,7 +9,7 @@ import ErrorStatus from "../../../../common/Error/ErrorStatus";
  * party.players table's request
  */
 export class Players {
-	
+
 
 	/**
 	 * Add a new player to a party
@@ -19,7 +19,7 @@ export class Players {
 	 */
 	static async addPlayer(partyId: IParty['_id'], player: Pick<IPlayer, '_id' | 'name' | 'rol'>): Promise<WithId<IParty> | null> {
 		let playerRol = PlayerRolEnum.PLAYER;
-		
+
 		//Find party
 		const party = await Parties.getPartyById(partyId);
 
@@ -35,7 +35,7 @@ export class Players {
 			throw new Error('Party is full');
 
 		//If this party have no master, set this player as master
-		if(!party.players.find(value => value.rol === PlayerRolEnum.MASTER))
+		if (!party.players.find(value => value.rol === PlayerRolEnum.MASTER))
 			playerRol = PlayerRolEnum.MASTER;
 
 		//New Player info
@@ -76,6 +76,35 @@ export class Players {
 				return undefined; */
 		} else
 			return undefined;
+	}
+
+	/**
+	 * Update player infiltrator to true
+	 * @param partyId 
+	 * @param playerId 
+	 * @returns 
+	 */
+	static async updatePlayerInfiltrator(partyId: IParty['_id'], playerId: IPlayer['_id']): Promise<UpdateResult> {
+
+		return await getDb().collection<IParty>(CollectionsEnum.PARTIES)
+			.updateOne({ _id: partyId },
+				{
+					$set: {
+						"players.$[player].infiltrator": true
+					}
+				},
+				{
+					arrayFilters: [
+						{ "player._id": playerId }
+					]
+				})
+			.then(result => {
+				return result;
+			})
+			.catch(err => {
+				console.error(err);
+				throw new ErrorStatus(500, 'Error at updating word')
+			});
 	}
 
 	/**

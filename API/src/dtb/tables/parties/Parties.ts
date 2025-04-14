@@ -1,4 +1,4 @@
-import { DeleteResult, InsertOneResult } from "mongodb";
+import { DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
 import { IParty } from "./types";
 import { Players } from "./values/Player";
 import { getDb } from "../../db";
@@ -86,6 +86,36 @@ export class Parties extends Players {
 			.catch(err => {
 				console.error(err);
 				throw new ErrorStatus(500, 'Error at deleting party')
+			});
+	}
+
+	/**
+	 * Update party game word
+	 * @param partyId 
+	 * @param word 
+	 * @returns 
+	 */
+	static async updateWord(partyId: IParty['_id'], word: string): Promise<UpdateResult> {
+		return await getDb().collection<IParty>('parties').updateOne({ _id: partyId }, { $set: { 'word': word } })
+			.then(result => result)
+			.catch(err => {
+				console.error(err);
+				throw new ErrorStatus(500, 'Error at updating word')
+			});
+	}
+
+	/**
+	 * Update party game phase
+	 * @param partyId 
+	 * @param gamePhase 
+	 * @returns 
+	 */
+	static async updateGamePhase(partyId: IParty['_id'], gamePhase: GamePhaseEnum): Promise<UpdateResult> {
+		return await getDb().collection<IParty>('parties').updateOne({ _id: partyId }, { $set: { 'gamePhase': gamePhase } })
+			.then(result => result)
+			.catch(err => {
+				console.error(err);
+				throw new ErrorStatus(500, 'Error at updating game phase')
 			});
 	}
 
