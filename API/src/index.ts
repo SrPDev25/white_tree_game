@@ -10,12 +10,15 @@ import { ObjectId } from 'mongodb'
 import { Parties } from './dtb/tables/parties/Parties'
 import { config } from 'dotenv'
 import helmet from 'helmet'
+import { setupSwagger } from '../swagger'
 
 //ENV variables dotenv
 config();
 //Se crea instacia de experss
 const app = express()
 app.use(express.json())
+setupSwagger(app);
+
 
 //El puerto del servidor al que va a estar escuchando la api
 //TODO poner el puerto en variable de entorno
@@ -31,10 +34,11 @@ connectToDb((err?: unknown) => {
 		app.listen(PORT, () => {
 			console.log(`Server running on port ${PORT}`)
 		})
-	}
+	} 
 })
 
 app.use(helmet())
+
 
 // Middleware para controlar el tiempo de respuesta
 app.use((req, res, next) => {
@@ -56,6 +60,15 @@ app.use('/game', gameRouter);
 app.use('/play', playRouter);
 
 // Test route
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Obtener todos los usuarios
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios
+ */
 app.get('/test/:partyId', (req, res) => {
 	try {
 		return Parties.deletePartyById(new ObjectId(req.params.partyId))
@@ -65,3 +78,4 @@ app.get('/test/:partyId', (req, res) => {
 		return res.status(500).send(error)
 	}
 });
+

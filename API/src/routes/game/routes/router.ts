@@ -15,6 +15,13 @@ router.use('/', (_req, _res, next) => next());
  * @param {string} partyId party _id to join
  * @body {string} name player name
  * @returns {IUserAuthorization} user's general and player information
+ * @openapi
+ * /game/going/{partyId}:
+ *   post:
+ *     summary: Obtener todos los usuarios
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios
  */
 router.post('/going/:partyId', goingPlayerToParty)
 
