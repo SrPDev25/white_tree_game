@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { IAuthSlice } from "./auth.type";
-import { IPlayerAuth } from "../../../services/authorization/auth-type";
+import { IUserAuthorization } from "../../../services/authorization/auth-type";
 
 
 /**
@@ -13,7 +13,7 @@ export const partySlice = createSlice({
         auth: null
     } as IAuthSlice,
     reducers: {
-        updateAuthData(state, action: PayloadAction<IPlayerAuth>) {
+        updateAuthData(state, action: PayloadAction<IUserAuthorization>) {
             state.auth = action.payload;
         },
         deleteAuthData(state) {

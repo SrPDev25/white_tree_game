@@ -1,10 +1,9 @@
-import { IParty, IPlayer } from "../../redux/api/party/party.type"
+import { IPlayer } from "../../redux/api/party/party.type"
+import { IUser } from "../api/api.type";
 
 /**
  * Authorization response
  */
-export type IPlayerAuth = {
-    _id: string,
-    party: IParty['_id'],
+export type IUserAuthorization = IUser & {
     playerInfo: IPlayer
-}
+};

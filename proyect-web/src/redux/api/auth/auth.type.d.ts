@@ -1,4 +1,6 @@
+import { IUserAuthorization } from "../../../services/authorization/auth-type"
+
 
 export type IAuthSlice = {
-    auth: IPlayerAuth | null
+    auth: IUserAuthorization| null
 }

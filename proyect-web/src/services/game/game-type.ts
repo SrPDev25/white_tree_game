@@ -1,4 +1,5 @@
-import { IGameConfig, IParty, IPlayer } from "../../redux/api/party/party.type"
+import { IGameConfig, IParty } from "../../redux/api/party/party.type"
+import { IUserAuthorization } from "../authorization/auth-type"
 
 export type ICreatePartyProps = {
     gameConfig: IGameConfig,
@@ -6,6 +7,6 @@ export type ICreatePartyProps = {
 }
 
 export type ICreatePartyResponse = {
-    user: IPlayer,
+    user: IUserAuthorization,
     party: IParty['_id']
 }

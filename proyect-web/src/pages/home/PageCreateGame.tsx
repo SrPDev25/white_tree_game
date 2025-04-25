@@ -3,6 +3,10 @@ import { PageTitle1 } from "../../components/atoms/PageTitle1";
 import { useEffect, useState } from "react";
 import { ICreatePartyProps } from "../../services/game/game-type";
 import { postCreateParty } from "../../services/game/game-service";
+import { setTokensHeader } from "../../services/api";
+import { useDispatch } from "react-redux";
+import { updateAuthData } from "../../redux/api/auth/authSlice";
+import { IUserAuthorization } from "../../services/authorization/auth-type";
 
 
 const initialValues: ICreatePartyProps = {
@@ -19,6 +23,7 @@ const initialValues: ICreatePartyProps = {
  * @returns 
  */
 export const PageCreateGame = () => {
+    const dispatch = useDispatch();
 
     const [formValues, setFormValues] = useState<ICreatePartyProps>(initialValues);
     const [isError, setIsError] = useState<boolean>(false);
@@ -71,7 +76,11 @@ export const PageCreateGame = () => {
             return;
         } else {
             postCreateParty(formValues)
-                .then((res) => console.log(res));
+                .then((res) => {
+                    const token = res.data.user.token;
+                    setTokensHeader(token);
+                    dispatch(updateAuthData(res.data.user));
+                });
         }
     };
 

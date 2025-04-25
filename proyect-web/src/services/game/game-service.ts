@@ -8,7 +8,7 @@ import { ICreatePartyProps, ICreatePartyResponse } from "./game-type";
  * Create a new game
  * @post /game/party
  * @props {ICreatePartyProps} props
- * @returns {Promise<IPlayerAuth | undefined>} response
+ * @returns {Promise<IUserAuthorization | undefined>} response
  */
 export const postCreateParty = async (props: ICreatePartyProps): Promise<AxiosResponse<ICreatePartyResponse, ApiError>> => {
 	return await api().post<ICreatePartyResponse>('/game/party', props);
