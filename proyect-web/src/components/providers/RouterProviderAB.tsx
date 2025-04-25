@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import RouterError from '../../pages/RouterError';
-import { HomePage } from '../../pages/home/HomePage';
+import { PageHome } from '../../pages/home/PageHome';
+import { PageCreateGame } from '../../pages/home/PageCreateGame';
 
 const RouterProviderAB = () => {
 
@@ -13,7 +14,12 @@ const RouterProviderAB = () => {
 		},
 		{
 			path: '/',
-			element: <HomePage />,
+			element: <PageHome />,
+			errorElement: <RouterError />
+		},
+		{
+			path: '/create',
+			element: <PageCreateGame />,
 			errorElement: <RouterError />
 		}
 	]);

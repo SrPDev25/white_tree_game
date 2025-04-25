@@ -1,12 +1,20 @@
 import { Box, Button, Grid } from "@mui/material";
 import { PageTitle1 } from "../../components/atoms/PageTitle1";
+import { useNavigate } from "react-router";
 
 
 
 
-export const HomePage = () => {
+export const PageHome = () => {
 
+    const navigator = useNavigate();
 
+    /**
+     * Navigate to the create game page
+     */
+    const handleClickCreateGameButton = () => {
+        navigator('/create');
+    }
 
     return (
         <Box
@@ -63,7 +71,8 @@ export const HomePage = () => {
                                     border: '10px solid white'
                                 }
                             }}
-                            size="large">
+                            size="large"
+                            onClick={handleClickCreateGameButton}>
                             {'Crear partida'}
                         </Button>
                     </Grid>
