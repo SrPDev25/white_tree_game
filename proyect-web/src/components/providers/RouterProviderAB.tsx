@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import RouterError from '../../pages/RouterError';
-import { PageHome } from '../../pages/home/PageHome';
+import { HomePage } from '../../pages/home/HomePage';
 
 const RouterProviderAB = () => {
 
@@ -13,7 +13,7 @@ const RouterProviderAB = () => {
 		},
 		{
 			path: '/',
-			element: <PageHome />,
+			element: <HomePage />,
 			errorElement: <RouterError />
 		}
 	]);
