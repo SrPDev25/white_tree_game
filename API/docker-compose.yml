@@ -1,21 +1,6 @@
 version: '3.1'
 
 services:
-  # app:
-  #   depends_on:
-  #     - mongo
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.dev
-  #   image: app
-  #   container_name: newe-app
-  #   restart: always
-  #   ports:
-  #     - 3000:3000
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - .:/usr/src/app
 
   mongo:
     image: mongo

@@ -1,6 +1,8 @@
-import { ObjectId } from "mongodb"
-import { IUser } from "../users/user.type"
-import { GamePhaseEnum, PlayerRolEnum, PlayerStateEnum } from "./enums"
+
+
+export type IPartySlice = {
+    party: IParty | null,
+}
 
 /**
  * Party info structure
@@ -20,10 +22,7 @@ export type IParty = {
     players: IPlayer[],
     /** Current game word */
     wordInGame?: string,
-    /** Vote phase necessary data
-     * @TODO
-     */
-    /* votePhaseData?: IVotePhaseData */
+
 }
 
 /**

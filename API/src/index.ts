@@ -11,6 +11,7 @@ import { Parties } from './dtb/tables/parties/Parties'
 import { config } from 'dotenv'
 import helmet from 'helmet'
 import { setupSwagger } from '../swagger'
+import cors from 'cors'
 
 //ENV variables dotenv
 config();
@@ -38,7 +39,7 @@ connectToDb((err?: unknown) => {
 })
 
 app.use(helmet())
-
+app.use(cors())
 
 // Middleware para controlar el tiempo de respuesta
 app.use((req, res, next) => {

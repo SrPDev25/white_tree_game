@@ -1,34 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Provider } from 'react-redux'
 import './App.css'
+import { store } from './redux/store'
+import RouterProviderAB from './components/providers/RouterProviderAB'
+import { useEffect } from 'react';
+import { getAuth } from './services/authorization/auth-service';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+
+  // Check user authorizations every 20 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getAuth();
+    }, 20000); // 20 segundos
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  // Set a token in local storage
+  useEffect(() => {
+    localStorage.setItem('token', '1c525638-d6a2-4e0b-bdd6-f36f1d957201');
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Provider store={store}>
+        <RouterProviderAB/>
+    </Provider>
   )
 }
 

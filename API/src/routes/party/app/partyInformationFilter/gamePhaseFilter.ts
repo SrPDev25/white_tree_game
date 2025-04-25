@@ -1,6 +1,6 @@
 import { IParty } from "../../../../dtb/tables/parties/types";
 import { IUserAuthorization } from "../../../auth/app/response.type";
-import { IDefaultPhaseFilter, IVotingPhaseFilter, IWordsPhaseFilter } from "./gamePhaseFilter.type";
+import { IDefaultPhaseFilter, IWordsPhaseFilter } from "./gamePhaseFilter.type";
 import { filterOtherPlayersInfo } from "./partyInformationFilters";
 
 //TODO: Refeactor this file and upgrade filters
@@ -49,7 +49,7 @@ export const wordsPhaseFilter = (player: IUserAuthorization, party: IParty): IWo
  * @param {IParty} party this party
  * @returns {IVotingPhaseFilter}
  */
-export const votingPhaseFilter = (player: IUserAuthorization, party: IParty): IVotingPhaseFilter => {
+/* export const votingPhaseFilter = (player: IUserAuthorization, party: IParty): IVotingPhaseFilter => {
 	const clonedParty = { ...party };
 	//Filter players info
 	filterOtherPlayersInfo(clonedParty, player._id);
@@ -58,7 +58,7 @@ export const votingPhaseFilter = (player: IUserAuthorization, party: IParty): IV
 		delete clonedParty.wordInGame;
 
 	//Filter basic info
-	const { _id, simpleId, gameConfig, gamePhase, players, wordInGame, votePhaseData } = clonedParty;
+	const { _id, simpleId, gameConfig, gamePhase, players, wordInGame } = clonedParty;
 
 	//Player vote info
 	let playerVotePhaseData: IVotingPhaseFilter['votePhase'] = {
@@ -86,7 +86,7 @@ export const votingPhaseFilter = (player: IUserAuthorization, party: IParty): IV
 		players,
 		wordInGame,
 		votePhase: playerVotePhaseData };
-}
+} */
 
 
 /**
@@ -95,7 +95,7 @@ export const votingPhaseFilter = (player: IUserAuthorization, party: IParty): IV
  * @param {IParty} party this party
  * @returns {IVotingPhaseFilter}
  */
-export const votingResultsPhaseFilter = (player: IUserAuthorization, party: IParty): IVotingPhaseFilter => {
+/* export const votingResultsPhaseFilter = (player: IUserAuthorization, party: IParty): IVotingPhaseFilter => {
 	const clonedParty = { ...party };
 	
 	//Filter players info
@@ -137,4 +137,4 @@ export const votingResultsPhaseFilter = (player: IUserAuthorization, party: IPar
 		wordInGame,
 		votePhase: playerVotePhaseData };
 }
-
+ */
