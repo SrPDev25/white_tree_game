@@ -8,7 +8,8 @@ import { IParty, IPartySlice } from "./party.type"
 export const partySlice = createSlice({
     name: 'party',
     initialState: {
-        party: null
+        party: null,
+        partyToJoin: null
     } as IPartySlice,
     reducers: {
         updatePartyData(state, action: PayloadAction<IParty>) {
@@ -16,8 +17,11 @@ export const partySlice = createSlice({
         },
         deletePartyData(state) {
             state.party = null;
-        }
+        },
+        updatePartyToJoinData(state, action: PayloadAction<IParty['_id']>) {
+            state.partyToJoin = action.payload;
+        },
     }
 })
 
-export const { updatePartyData, deletePartyData } = partySlice.actions;
+export const { updatePartyData, deletePartyData, updatePartyToJoinData } = partySlice.actions;

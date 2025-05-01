@@ -7,8 +7,10 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAuth } from '../../services/authorization/auth-service';
 import { updateAuthData } from '../../redux/api/auth/authSlice';
-import { getGameInfo } from '../../services/party/game-service';
+import { getGameInfo } from '../../services/party/party-service';
 import { updatePartyData } from '../../redux/api/party/partySlice';
+import { PageFindGame } from '../../pages/home/PageFindGame';
+import { PageGoingGame } from '../../pages/home/PageGoingGame';
 
 /**
  * Router provider
@@ -64,6 +66,16 @@ const RouterProviderAB = () => {
 		{
 			path: '/create',
 			element: <PageCreateGame />,
+			errorElement: <RouterError />
+		},
+		{
+			path: '/find',
+			element: <PageFindGame />,
+			errorElement: <RouterError />
+		},
+		{
+			path: '/game/going',
+			element: <PageGoingGame />,
 			errorElement: <RouterError />
 		},
 		{

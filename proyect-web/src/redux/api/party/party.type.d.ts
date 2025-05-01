@@ -2,6 +2,7 @@
 
 export type IPartySlice = {
     party: IParty | null,
+    partyToJoin: IParty['_id'] | null
 }
 
 /**

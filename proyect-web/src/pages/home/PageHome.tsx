@@ -16,6 +16,10 @@ export const PageHome = () => {
         navigator('/create');
     }
 
+    const handleClickNavFindGameButton = () => {
+        navigator('/find');
+    }
+
     return (
         <Box
             width={'100%'}
@@ -34,6 +38,7 @@ export const PageHome = () => {
                     {/* Search game */}
                     <Grid>
                         <Button
+                            onClick={handleClickNavFindGameButton}
                             sx={{
                                 //Button
                                 border: '4px solid white',
@@ -42,7 +47,6 @@ export const PageHome = () => {
                                 //Text
                                 fontSize: 33,
                                 color: 'white',
-
                                 ":hover": {
                                     border: '10px solid white'
                                 }
