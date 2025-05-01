@@ -6,7 +6,7 @@ import { postCreateParty } from "../../services/game/game-service";
 import { setTokensHeader } from "../../services/api";
 import { useDispatch } from "react-redux";
 import { updateAuthData } from "../../redux/api/auth/authSlice";
-import { IUserAuthorization } from "../../services/authorization/auth-type";
+import { useNavigate } from "react-router";
 
 
 const initialValues: ICreatePartyProps = {
@@ -24,6 +24,7 @@ const initialValues: ICreatePartyProps = {
  */
 export const PageCreateGame = () => {
     const dispatch = useDispatch();
+    const navigation = useNavigate();
 
     const [formValues, setFormValues] = useState<ICreatePartyProps>(initialValues);
     const [isError, setIsError] = useState<boolean>(false);
@@ -80,7 +81,9 @@ export const PageCreateGame = () => {
                     const token = res.data.user.token;
                     setTokensHeader(token);
                     dispatch(updateAuthData(res.data.user));
-                });
+                    navigation('/game');
+                })
+                .catch((err) => console.log(err));
         }
     };
 

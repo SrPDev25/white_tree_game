@@ -1,6 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react-swc'
-
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -22,6 +22,11 @@ export default defineConfig(({ mode }) => {
       //Expose the API_URL to the client
       'import.meta.env.API_URL': JSON.stringify(env.API_URL)
     },
+    resolve: {
+			alias: {
+				'src/': `${path.resolve(__dirname, 'src')}/`,
+			},
+		},
     server
   };
 })

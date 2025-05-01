@@ -1,3 +1,4 @@
+import { IAuthSlice } from "./api/auth/auth.type";
 import { IPartySlice } from "./api/party/party.type";
 
 /**
@@ -6,4 +7,5 @@ import { IPartySlice } from "./api/party/party.type";
 export type IAppStore = {
     // API
     party: IPartySlice;
+    auth: IAuthSlice;
 }

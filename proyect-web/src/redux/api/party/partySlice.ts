@@ -20,4 +20,4 @@ export const partySlice = createSlice({
     }
 })
 
-export const { updatePartyData: changeProductImg, deletePartyData } = partySlice.actions;
+export const { updatePartyData, deletePartyData } = partySlice.actions;

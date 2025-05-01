@@ -11,7 +11,7 @@ router.use('/', partyRouterAuthorization);
 /**
  * @description Get party information, filtered by player authorization
  * @get
- * @path /party/:partyId
+ * @path /party
  * @param {string} partyId user party _id
  * @header {string} token user's token
  * 

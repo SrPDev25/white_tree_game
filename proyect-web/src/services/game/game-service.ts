@@ -13,3 +13,4 @@ import { ICreatePartyProps, ICreatePartyResponse } from "./game-type";
 export const postCreateParty = async (props: ICreatePartyProps): Promise<AxiosResponse<ICreatePartyResponse, ApiError>> => {
 	return await api().post<ICreatePartyResponse>('/game/party', props);
 }
+

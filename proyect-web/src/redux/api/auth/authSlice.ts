@@ -7,7 +7,7 @@ import { IUserAuthorization } from "../../../services/authorization/auth-type";
  * Auth slice
  * @provisional
  */
-export const partySlice = createSlice({
+export const authSlice = createSlice({
     name: 'auth',
     initialState: {
         auth: null
@@ -22,4 +22,4 @@ export const partySlice = createSlice({
     }
 })
 
-export const { updateAuthData, deleteAuthData } = partySlice.actions;
+export const { updateAuthData, deleteAuthData } = authSlice.actions;
