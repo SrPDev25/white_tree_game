@@ -12,7 +12,7 @@ import { IUserAuthorization } from "../authorization/auth-type";
  * @returns {Promise<IGetPartyInfoResponse | undefined>} response
  */
 export const getGameInfo = async (): Promise<AxiosResponse<IGetPartyInfoResponse, ApiError>> => {
-	return await api().get<IGetPartyInfoResponse>('/party');
+	return await api().get<IGetPartyInfoResponse>('/play');
 }
 
 /**

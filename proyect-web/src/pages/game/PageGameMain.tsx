@@ -7,6 +7,7 @@ import { PageMasterRecruitment } from "./master/PageMasterRecruitment";
 import { PagePlayerRecruitment } from "./player/PagePlayerRecruitment";
 import { GamePhaseEnum, PlayerRolEnum } from "../../services/api/api.enum";
 import { PageMasterWordPhase } from "./master/PageMasterWordPhase";
+import { PagePlayerWord } from "./player/PagePlayerWord";
 
 
 
@@ -23,7 +24,7 @@ const masterViews: Record<GamePhaseEnum, ReactElement> = {
 
 const playerViews: Record<GamePhaseEnum, ReactElement> = {
     [GamePhaseEnum.RECRUITMENT]: <PagePlayerRecruitment />,
-    [GamePhaseEnum.WORDS]: <PagePlayerRecruitment />,
+    [GamePhaseEnum.WORDS]: <PagePlayerWord />,
     [GamePhaseEnum.STARTING]: <PagePlayerRecruitment />,
     [GamePhaseEnum.VOTING]: <PagePlayerRecruitment />,
     [GamePhaseEnum.VOTING_RESULTS]: <PagePlayerRecruitment />,

@@ -9,7 +9,10 @@ import { IParty, IPlayer } from "../../../../dtb/tables/parties/types";
 export const filterOtherPlayersInfo = (party: IParty, playerId: IPlayer['_id']): void => {
 	party.players = party.players.map(player => {
 		//This player can see his information
-		if (player._id === playerId) {
+		if (player._id.toString() == playerId.toString()) {
+			if(player.infiltrator){
+				console.log(player)
+			}
 			return player;
 		}
 		//Info other players can see//TODO: remove this comment

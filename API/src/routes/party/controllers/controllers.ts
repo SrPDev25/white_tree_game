@@ -31,7 +31,7 @@ export const partyRouterAuthorization = async (req: IPartyRouterRequest, res: Re
 /**
  * Give the party information player can see
  * @param {IPartyRouterRequest} req 
- * @param {Response} res 
+ * @param {Response} res  
  * @returns 
  */
 export const playerPartyInfo = async (req: IPartyRouterRequest, res: Response) => {
