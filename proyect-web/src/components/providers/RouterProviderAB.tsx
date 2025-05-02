@@ -27,20 +27,25 @@ const RouterProviderAB = () => {
 					dispatch(updatePartyData(response.data));
 				}
 			})
-			.catch((error) => console.log('Error fetching game info:', error));
+			.catch();
 	};
 
 	const checkAuth = async () => {
 		getAuth()
-				.then((response) => {
-					dispatch(updateAuthData(response.data));
-					checkGameInfo();
-				})
-				.catch((error) => console.log('Error fetching auth data:', error));
+			.then((response) => {
+				dispatch(updateAuthData(response.data));
+				checkGameInfo();
+			})
+			.catch((error) => {
+				if (error.response.status === 401) {
+					localStorage.removeItem('token');
+				}
+			});
 	};
 
 	// Check user authorizations every 20 seconds
 	useEffect(() => {
+		console.log(localStorage.getItem('token'));
 		checkAuth(); // Initial check
 		const intervalId = setInterval(() => {
 			checkAuth();
