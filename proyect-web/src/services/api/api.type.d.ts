@@ -145,3 +145,4 @@ export type IUser = {
     /**Party _id */
     party: ObjectId;
 }
+

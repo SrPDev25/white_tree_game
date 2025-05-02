@@ -2,7 +2,6 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import RouterError from '../../pages/RouterError';
 import { PageHome } from '../../pages/home/PageHome';
 import { PageCreateGame } from '../../pages/home/PageCreateGame';
-import { PageMasterRecruitment } from '../../pages/game/master/PageMasterRecruitment';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAuth } from '../../services/authorization/auth-service';
@@ -11,6 +10,7 @@ import { getGameInfo } from '../../services/party/party-service';
 import { updatePartyData } from '../../redux/api/party/partySlice';
 import { PageFindGame } from '../../pages/home/PageFindGame';
 import { PageGoingGame } from '../../pages/home/PageGoingGame';
+import { PageGameMain } from '../../pages/game/PageGameMain';
 
 /**
  * Router provider
@@ -49,7 +49,7 @@ const RouterProviderAB = () => {
 		checkAuth(); // Initial check
 		const intervalId = setInterval(() => {
 			checkAuth();
-		}, 5000); // 5 segundos
+		}, 2000); // 2 segundos
 
 		return () => clearInterval(intervalId);
 	}, []);
@@ -85,7 +85,7 @@ const RouterProviderAB = () => {
 		},
 		{
 			path: '/game',
-			element: <PageMasterRecruitment />,
+			element: <PageGameMain />,
 			errorElement: <RouterError />
 		}
 	]);

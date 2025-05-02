@@ -5,6 +5,7 @@ import { postGoingPlayerToParty } from "../../services/party/party-service";
 import { useDispatch, useSelector } from "react-redux";
 import { IAppStore } from "../../redux/store.type";
 import { updateAuthData } from "../../redux/api/auth/authSlice";
+import { useNavigate } from "react-router";
 
 
 
@@ -12,6 +13,7 @@ import { updateAuthData } from "../../redux/api/auth/authSlice";
 export const PageGoingGame = () => {
 
     const dispatch = useDispatch();
+    const navigator = useNavigate();
 
     const partyToJoin = useSelector((state: IAppStore)=> state.party.partyToJoin)
 
@@ -32,7 +34,8 @@ export const PageGoingGame = () => {
             })
                 .then((res) => {
                     dispatch(updateAuthData(res.data));
-                    //navigator(`/game/${res.data._id}`);
+                    localStorage.setItem('token', res.data.token);
+                    navigator('/game');
                 })
                 .catch((err) => {
                     console.log(err);
