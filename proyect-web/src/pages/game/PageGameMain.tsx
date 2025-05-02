@@ -6,6 +6,7 @@ import { IAppStore } from "../../redux/store.type";
 import { PageMasterRecruitment } from "./master/PageMasterRecruitment";
 import { PagePlayerRecruitment } from "./player/PagePlayerRecruitment";
 import { GamePhaseEnum, PlayerRolEnum } from "../../services/api/api.enum";
+import { PageMasterWordPhase } from "./master/PageMasterWordPhase";
 
 
 
@@ -13,7 +14,7 @@ import { GamePhaseEnum, PlayerRolEnum } from "../../services/api/api.enum";
 
 const masterViews: Record<GamePhaseEnum, ReactElement> = {
     [GamePhaseEnum.RECRUITMENT]: <PageMasterRecruitment />,
-    [GamePhaseEnum.WORDS]: <PageMasterRecruitment />,
+    [GamePhaseEnum.WORDS]: <PageMasterWordPhase />,
     [GamePhaseEnum.STARTING]: <PageMasterRecruitment />,
     [GamePhaseEnum.VOTING]: <PageMasterRecruitment />,
     [GamePhaseEnum.VOTING_RESULTS]: <PageMasterRecruitment />,

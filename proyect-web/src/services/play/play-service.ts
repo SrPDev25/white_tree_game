@@ -12,3 +12,12 @@ import { ApiError } from "../api.type";
 export const postStartGame= async (props: IPostPlayStartProps): Promise<AxiosResponse<void, ApiError>> => {
 	return await api().post<void>('/play/start', props);
 }
+
+/**
+ * End game
+ * @post /play/end
+ * @returns {Promise<void>} response
+ */
+export const postEndGame= async (): Promise<AxiosResponse<void, ApiError>> => {
+	return await api().post<void>('/play/end');
+}
